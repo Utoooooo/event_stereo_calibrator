@@ -25,3 +25,17 @@ Thumbs.db
 # Generated checkerboard exports
 checkerboard_*.png
 test_out.png
+
+# Captured event-camera frames
+captured/
+
+# Persisted GUI options
+.gui_settings.json
+
+# Event logs
+event_log_*.bin
+event_log_*.json
+
+# Calibration capture sessions and raw capture data (large binaries)
+calib_*/
+*.npz

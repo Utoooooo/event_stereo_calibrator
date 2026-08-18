@@ -52,3 +52,34 @@ Phase durations cannot be resolved finer than one monitor refresh interval
 (~16.7 ms at 60 Hz). The GUI warns when the shortest phase is below a single
 frame of the selected monitor; use a high-refresh display for short off-phase
 times.
+
+## Event-Camera Capture (current)
+
+The same GUI (`python run.py`) now also sets up event-camera capture for the
+two OpenMV GENX320 cameras:
+
+- **Left / Right camera port** dropdowns (refreshable) for the serial ports.
+- **Accumulation time** (default **200 ms**): the capture window per shot.
+- **Control GUI display** selector so the control panel can live on a second
+  monitor (checkerboard on one screen, control panel on another).
+- **Connect && Open Control Panel** connects both cameras and opens the panel.
+
+### Control panel
+
+- **Live monitor**: real-time stitched `Left | Right` event view plus per-camera
+  connection status and event rate.
+- **Capture**: accumulates events within the accumulation window on each camera
+  and saves one PNG per camera into the `captured/` folder, named
+  `capture_<timestamp>_<idx>_L.png` / `_R.png`.
+- **Exit (disconnect)**: stops streaming and releases both serial ports.
+
+### Architecture
+
+- `event_streaming_cam.py` runs *on* the camera (MicroPython); it streams GENX320
+  events over the `events` protocol channel and produces **no logging/output**.
+  The capture GUI exec's this script onto each camera.
+- `checkerboard_gui/camera.py` is the PC-side capture worker: one thread per
+  camera, with separate live and capture accumulators and **no file logging**
+  (unlike `event_streaming_pc.py`, which is the separate logging workflow used
+  via `event_log_stereo.py`).
+- `checkerboard_gui/control.py` is the control-panel window.

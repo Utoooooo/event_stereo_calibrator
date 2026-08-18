@@ -111,6 +111,15 @@ class FlashingCheckerboard(QWidget):
         else:
             super().keyPressEvent(event)
 
+    def toggle_pause(self) -> bool:
+        """Toggle pause and return the new paused state (True = paused on board)."""
+        self._toggle_pause()
+        return self._paused
+
+    @property
+    def is_paused(self) -> bool:
+        return self._paused
+
     def _toggle_pause(self) -> None:
         self._paused = not self._paused
         if self._paused:

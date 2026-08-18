@@ -1,1 +1,6 @@
 PyQt6>=6.6
+numpy>=1.24
+opencv-python>=4.8
+pyserial>=3.5
+openmv
+matplotlib>=3.7
