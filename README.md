@@ -2,6 +2,14 @@
 
 Tooling for stereo calibration of event cameras.
 
+## Basic Operation Pipeline (For Charlie):
+- Plug in a display, `python run.py` to open the checkerboard generator
+- Use left panel only (right was for openmv). Choose the display screen, click on `Start Flashing Display`. You can pause with space key
+- Take some short recordings as npz and move the screen around
+- Download npz to local, use `python tools\batch_renderer.py` to convert them into png
+- Split png into 2 folders, left and right
+- Finally, `python src\run_calibration.py` to do the calibration. You may need to calculate the square size based on the screen you use.
+
 ## Checkerboard Generator (current)
 
 A GUI that displays a **flashing checkerboard** on screen. Event cameras only
